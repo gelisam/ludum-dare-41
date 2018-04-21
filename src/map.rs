@@ -130,6 +130,12 @@ impl Map {
         self.cells.insert(self.car_position, CellContents::Car(Car::new(self.car_position.forward())));
     }
 
+    pub fn go_backward(&mut self) {
+        self.cells.remove(&self.car_position);
+        self.car_position += -self.car_position.forward();
+        self.cells.insert(self.car_position, CellContents::Car(Car::new(self.car_position.forward())));
+    }
+
     #[allow(dead_code)]
     pub fn get(&self, index: HexPoint) -> Option<CellContents> {
         if index.q.abs() <= MAP_RADIUS

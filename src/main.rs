@@ -78,7 +78,17 @@ impl event::EventHandler for Globals {
     }
 
     fn key_up_event(&mut self, _ctx: &mut Context, _keycode: Keycode, _keymod: Mod, _repeat: bool) {
-        self.map.go_forward();
+        // println!(
+        //     "Key pressed: {:?}, modifier {:?}, repeat: {}",
+        //     _keycode, _keymod, _repeat
+        // );
+        match _keycode {
+            Keycode:: Up => self.map.go_forward(),
+            Keycode:: Left => self.map.go_forward(),
+            Keycode:: Right => self.map.go_forward(),
+            Keycode:: Down => self.map.go_backward(),
+            _ => (),
+        }
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult<()> {

@@ -1,6 +1,6 @@
 extern crate nalgebra;
 
-use core::ops::{Add,AddAssign,Mul,MulAssign};
+use core::ops::{Neg,Add,AddAssign,Mul,MulAssign,Sub,SubAssign};
 use ggez::{GameResult, Context};
 use ggez::graphics::{Drawable, DrawMode, Point2, Mesh, Vector2};
 
@@ -71,6 +71,16 @@ pub struct HexVector {
     pub r: i32,
 }
 
+impl Neg for HexPoint {
+    type Output = HexPoint;
+
+    fn neg(self) -> HexPoint {
+        HexPoint::new(
+            -self.q,
+            -self.r,
+        )
+    }
+}
 
 impl Add<HexVector> for HexPoint {
     type Output = HexPoint;
@@ -89,6 +99,23 @@ impl AddAssign<HexVector> for HexPoint {
         self.r += other.r;
     }
 }
+impl SubAssign<HexVector> for HexPoint {
+    fn sub_assign(&mut self, other: HexVector) {
+        self.q -= other.q;
+        self.r -= other.r;
+    }
+}
+
+impl Neg for HexVector {
+    type Output = HexVector;
+
+    fn neg(self) -> HexVector {
+        HexVector::new(
+            -self.q,
+            -self.r,
+        )
+    }
+}
 
 impl Add for HexVector {
     type Output = HexVector;
@@ -105,6 +132,13 @@ impl AddAssign for HexVector {
     fn add_assign(&mut self, other: HexVector) {
         self.q += other.q;
         self.r += other.r;
+    }
+}
+
+impl SubAssign for HexVector {
+    fn sub_assign(&mut self, other: HexVector) {
+        self.q -= other.q;
+        self.r -= other.r;
     }
 }
 
